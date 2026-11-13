@@ -52,6 +52,8 @@ python3 -m venv .venv
 .venv/bin/python crewai/hello.py
 ```
 
+CrewAI 1.15.41 installs on Python 3.10 to 3.13, not on 3.14. Create the environment with one of those, for example `python3.13 -m venv .venv`.
+
 ## What the example sends
 
 One `POST https://oathbreaker.ai/v1/chat/completions` with `model`, `messages`, `max_tokens` and `reasoning_effort`. The messages are a system prompt that CrewAI writes from the agent's role, goal and backstory, followed by the task. Every field is one the [API reference](https://oathbreaker.ai/docs#requests) lists. The API rejects a request that carries any other field: `400 invalid_request`, "The request contains an unsupported field."

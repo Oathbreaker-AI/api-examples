@@ -22,7 +22,11 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: 22
-      - run: python3 -m venv .venv && .venv/bin/pip install -r ${{ matrix.framework }}/requirements.txt
+      # CrewAI does not install on the runner's own Python 3.14.
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: '3.12'
+      - run: python -m venv .venv && .venv/bin/pip install -r ${{ matrix.framework }}/requirements.txt
       - if: matrix.framework == 'openai-sdk'
         run: npm ci --prefix openai-sdk
       - run: node --test tests/frameworks/${{ matrix.framework }}.test.mjs
