@@ -1,6 +1,6 @@
 # Oathbreaker AI API examples
 
-Small examples for [Oathbreaker AI](https://oathbreaker.ai), a prepaid model API operated by **Formacha LLC** that uses the OpenAI Chat Completions format. The examples use `oathbreaker-glm-5.3`, backed by Refuseless's `glm-5.3-abliterated` offering; [`oathbreaker-glm-5.3-flash`](https://oathbreaker.ai/models/glm-5-3-flash-abliterated) is available with the same account and key. Oathbreaker operates the API gateway and billing, not the underlying model development.
+Small examples for [Oathbreaker AI](https://oathbreaker.ai), a prepaid model API operated by **Formacha LLC** that uses the OpenAI Chat Completions format. The examples use `oathbreaker-glm-5.3`, the hosted GLM-5.3 Abliterated model; [`oathbreaker-glm-5.3-flash`](https://oathbreaker.ai/models/glm-5-3-flash-abliterated) is available with the same account and key. Oathbreaker operates the API gateway and billing, not the underlying model development.
 
 | | |
 |---|---|
