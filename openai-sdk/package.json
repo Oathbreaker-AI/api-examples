@@ -1,0 +1,13 @@
+{
+  "name": "oathbreaker-openai-sdk-example",
+  "private": true,
+  "type": "module",
+  "description": "The OpenAI JavaScript SDK pointed at the Oathbreaker AI API.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "openai": "7.56.0"
+  }
+}
