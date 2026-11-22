@@ -1,16 +1,29 @@
 # Oathbreaker AI API examples
 
-Small examples for [Oathbreaker AI](https://oathbreaker.ai), a prepaid model API operated by **Formacha LLC** that uses the OpenAI Chat Completions format. The examples use `oathbreaker-glm-5.3`, the hosted GLM-5.3 Abliterated model; [`oathbreaker-glm-5.3-flash`](https://oathbreaker.ai/models/glm-5-3-flash-abliterated) is available with the same account and key. Oathbreaker operates the API gateway and billing, not the underlying model development.
+Small examples for [Oathbreaker AI](https://oathbreaker.ai), a prepaid model API operated by **Formacha LLC** that uses the OpenAI Chat Completions format. The examples use `oathbreaker-glm-5.3`, the hosted GLM-5.3 Abliterated model; every model in [the table below](#models) works with the same account and key. Oathbreaker operates the API gateway and billing, not the underlying model development.
 
 | | |
 |---|---|
 | API format | OpenAI Chat Completions: `POST https://oathbreaker.ai/v1/chat/completions` |
 | Base URL | `https://oathbreaker.ai/v1` |
 | Authentication | `Authorization: Bearer <key>`, with the key kept in `OATHBREAKER_API_KEY` |
-| Models | `oathbreaker-glm-5.3`, `oathbreaker-glm-5.3-flash` |
-| Not offered | Responses API, legacy Completions, embeddings, image and audio input |
+| Models | `oathbreaker-glm-5.3`, `oathbreaker-glm-5.3-flash`, `oathbreaker-deepseek-v4.1-flash`, `oathbreaker-deepseek-v4.1-flash-fast`, `oathbreaker-kimi-k3.1-pro` |
+| Other formats | `POST /v1/responses` (stateless, for Codex) and `POST /v1/messages` (Anthropic format, for Claude Code). These examples use Chat Completions. |
+| Not offered | Legacy Completions, embeddings, image and audio input |
 
 The JavaScript and Python examples below need no packages. The SDK and framework guides each install the one package they are about.
+
+## Models
+
+| Model | Context window to configure | Max output |
+|---|---|---|
+| [`oathbreaker-glm-5.3`](https://oathbreaker.ai/models/glm-5-3-abliterated) | 131,072 tokens | 32,768 |
+| [`oathbreaker-glm-5.3-flash`](https://oathbreaker.ai/models/glm-5-3-flash-abliterated) | 131,072 tokens | 32,768 |
+| [`oathbreaker-deepseek-v4.1-flash`](https://oathbreaker.ai/models/deepseek-v4-1-flash-abliterated) | 32,768 tokens | 32,768 |
+| `oathbreaker-deepseek-v4.1-flash-fast` | 32,768 tokens | 32,768 |
+| [`oathbreaker-kimi-k3.1-pro`](https://oathbreaker.ai/models/kimi-k3-1-pro-abliterated) | 32,768 tokens | 24,576 |
+
+Input and requested output share each window, and the output budget includes reasoning. The DeepSeek and Kimi models admit a request by a 131,072-unit budget of UTF-8 input bytes, message framing and requested output tokens, so 32,768 is a conservative token window for a framework to plan with. DeepSeek V4.1 Flash Fast is the same model as DeepSeek V4.1 Flash on a faster route. Prices are on the [pricing page](https://oathbreaker.ai/pricing), and the [model limits](https://oathbreaker.ai/docs#model) list the current values.
 
 ## Before you start
 

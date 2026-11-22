@@ -24,7 +24,7 @@ print(llm.invoke("Reply with exactly: Oathbreaker connected.").content)
 | Class | `ChatOpenAI` from `langchain-openai` |
 | `base_url` | `https://oathbreaker.ai/v1` |
 | `api_key` | Your Oathbreaker key, kept in `OATHBREAKER_API_KEY` |
-| `model` | `oathbreaker-glm-5.3`, or `oathbreaker-glm-5.3-flash` |
+| `model` | `oathbreaker-glm-5.3`, or any model in the [main README](../README.md#models) |
 
 ## Run the example
 

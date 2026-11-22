@@ -43,7 +43,7 @@ console.log(response.choices[0].message.content);
 |---|---|
 | Base URL | `https://oathbreaker.ai/v1` (do not add a second `/v1`) |
 | API key | Your Oathbreaker key, kept in `OATHBREAKER_API_KEY` |
-| Model | `oathbreaker-glm-5.3`, or `oathbreaker-glm-5.3-flash` |
+| Model | `oathbreaker-glm-5.3`, or any model in the [main README](../README.md#models) |
 | Method to call | `client.chat.completions.create` |
 
 ## Run the examples
@@ -71,7 +71,7 @@ One `POST https://oathbreaker.ai/v1/chat/completions` with `model`, `messages`, 
 - **Turn off automatic retries.** By default the SDK repeats a failed request twice, so one failing call reaches the API three times. `max_retries=0` (`maxRetries: 0`) sends it once. A timeout does not prove that nothing was processed: [check usage before you repeat a request](https://oathbreaker.ai/docs#errors).
 - **Allow long generations.** A generation can run for up to ten minutes. The examples wait 650 seconds, as the API reference's own example does.
 - **The output budget includes reasoning.** `max_tokens` covers the model's reasoning and its answer together, so set it yourself instead of relying on a default. If reasoning uses it up, `finish_reason` is `length` and the answer can be empty; the examples treat that as a failure instead of printing a partial answer.
-- **Chat Completions only.** `client.responses`, `client.embeddings` and the legacy `client.completions` are not offered, and neither is image or audio input. `client.models.list()` works and lists the available models.
+- **Chat Completions here.** `client.responses.create` also works, but the API is stateless: send the whole conversation in `input` with `store: false`, because `previous_response_id` is rejected. `client.embeddings` and the legacy `client.completions` are not offered, and neither is image or audio input. `client.models.list()` works and lists the available models.
 - **Only the listed request fields.** OpenAI parameters outside the request reference, such as `stop`, `n`, `seed`, `user`, `logprobs` and the penalty settings, are not accepted, and neither are the `developer` role or a `name` on a message.
 - **Tool calling: append the message you got back.** In a tool conversation the [API reference](https://oathbreaker.ai/docs#tools) asks you to send the assistant's `reasoning_content` back along with its `tool_calls`. Both SDKs do that when you append `response.choices[0].message` itself to `messages`. Building a new assistant message from selected fields drops it. Leave `strict` off your tool definitions: strict tool schemas are not supported.
 - **Streaming.** Pass `stream=True`. The last chunk carries the usage for the request. See the [streaming reference](https://oathbreaker.ai/docs#streaming).

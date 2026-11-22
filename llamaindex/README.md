@@ -30,9 +30,9 @@ To make it the default model for indexes, query engines and agents, set `Setting
 | Class | `OpenAILike` from `llama-index-llms-openai-like` |
 | `api_base` | `https://oathbreaker.ai/v1` |
 | `api_key` | Your Oathbreaker key, kept in `OATHBREAKER_API_KEY` |
-| `model` | `oathbreaker-glm-5.3`, or `oathbreaker-glm-5.3-flash` |
+| `model` | `oathbreaker-glm-5.3`, or any model in the [main README](../README.md#models) |
 | `is_chat_model` | `True` |
-| `context_window` | `131072` |
+| `context_window` | `131072` for the GLM models, `32768` for DeepSeek and Kimi |
 
 ## Run the example
 
@@ -52,7 +52,7 @@ One `POST https://oathbreaker.ai/v1/chat/completions` with `model`, `messages`, 
 
 - **`is_chat_model=True` is required.** Without it `OpenAILike` calls the legacy Completions endpoint, which Oathbreaker does not offer, and the request fails with `unsupported_endpoint`.
 - **`api_base` is required.** Without it `OpenAILike` sends the request, and the key you passed, to OpenAI's own endpoint.
-- **Set the context window.** `OpenAILike` assumes 3,900 tokens unless told otherwise, and LlamaIndex sizes the prompts it builds to fit that. Both Oathbreaker models have a 131,072-token window that input and requested output share; the [model limits](https://oathbreaker.ai/docs#model) list the current values.
+- **Set the context window.** `OpenAILike` assumes 3,900 tokens unless told otherwise, and LlamaIndex sizes the prompts it builds to fit that. The GLM models have a 131,072-token window that input and requested output share. Use 32,768 for the DeepSeek and Kimi models, which admit requests by a byte-based budget ([models](../README.md#models)). The [model limits](https://oathbreaker.ai/docs#model) list the current values.
 - **Turn off automatic retries.** With the defaults, one failing call reached a local stand-in server 12 times. `max_retries=0` sends it once. A timeout does not prove that nothing was processed: [check usage before you repeat a request](https://oathbreaker.ai/docs#errors).
 - **Allow long generations.** `OpenAILike` gives up after 60 seconds by default. A generation can run for up to ten minutes; the example waits 650 seconds.
 - **The output budget includes reasoning.** `max_tokens` covers the model's reasoning and its answer together, so set it yourself instead of relying on a default. If reasoning uses it up, the finish reason is `length` and the content can be empty; the example reads it from `response.raw.choices[0].finish_reason` and treats that as a failure.

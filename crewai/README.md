@@ -35,10 +35,10 @@ print(Crew(agents=[agent], tasks=[task]).kickoff().raw)
 | Setting | Value |
 |---|---|
 | Class | `LLM` from `crewai` |
-| `model` | `openai/oathbreaker-glm-5.3`, or `openai/oathbreaker-glm-5.3-flash` |
+| `model` | `openai/oathbreaker-glm-5.3`, or `openai/` followed by any model in the [main README](../README.md#models) |
 | `base_url` | `https://oathbreaker.ai/v1` |
 | `api_key` | Your Oathbreaker key, kept in `OATHBREAKER_API_KEY` |
-| `context_window_size` | `131072` |
+| `context_window_size` | `131072` for the GLM models, `32768` for DeepSeek and Kimi |
 
 The `openai/` prefix selects CrewAI's client for OpenAI-style APIs, and `base_url` points that client at Oathbreaker. Only the part after the slash is sent as the model name.
 
@@ -63,7 +63,7 @@ One `POST https://oathbreaker.ai/v1/chat/completions` with `model`, `messages`, 
 - **Every step is a request.** Each task and each extra agent adds requests, and CrewAI's system prompt is sent, and billed as input, with every one of them. Start with a small crew and look at the Usage tab in your console before scaling up.
 - **Turn off both kinds of retry.** The client repeats a failed request twice (`max_retries`), and the agent runs a failed task again twice (`max_retry_limit`). With the defaults, one failing call reached a local stand-in server 9 times; with both set to `0` it was sent once. A timeout does not prove that nothing was processed: [check usage before you repeat a request](https://oathbreaker.ai/docs#errors).
 - **A 429 is still retried.** CrewAI itself retries a rate-limit response, up to three attempts in all, and this cannot be switched off on `LLM`. The API does not charge for a 429.
-- **Set the context window.** CrewAI does not know Oathbreaker's models and assumes 8,192 tokens. Past that it summarises the conversation, which takes requests of its own. Both models have a 131,072-token window that input and requested output share; the [model limits](https://oathbreaker.ai/docs#model) list the current values.
+- **Set the context window.** CrewAI does not know Oathbreaker's models and assumes 8,192 tokens. Past that it summarises the conversation, which takes requests of its own. The GLM models have a 131,072-token window that input and requested output share. Use 32,768 for the DeepSeek and Kimi models, which admit requests by a byte-based budget ([models](../README.md#models)). The [model limits](https://oathbreaker.ai/docs#model) list the current values.
 - **Allow long generations.** A generation can run for up to ten minutes; the example waits 650 seconds.
 - **The output budget includes reasoning.** `max_tokens` covers the model's reasoning and its answer together, so set it yourself instead of relying on a default. A crew's result does not say why the model stopped, so an answer that was cut off looks like any other. If answers come back short or empty, raise `max_tokens` or lower `reasoning_effort`.
 - **No embeddings.** Oathbreaker serves chat models only. Crew memory and knowledge sources need an embedding model, so leave them off or configure an embedder from another provider.
