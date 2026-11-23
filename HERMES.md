@@ -1,6 +1,6 @@
 # Connect Hermes to Oathbreaker
 
-The maintained [Oathbreaker agent guide](https://oathbreaker.ai/agents) contains current model settings and troubleshooting. Hermes's interface can vary by version.
+The maintained [Oathbreaker agent guide](https://oathbreaker.ai/agents) contains current model settings and troubleshooting. Hermes's interface can vary by version. The wizard values and recommended settings are also in [configs/hermes/](configs/hermes/).
 
 1. Install Hermes using the [official Nous Research instructions](https://hermes-agent.nousresearch.com/docs/getting-started/installation).
 2. Create an Oathbreaker account, add credit, and create a key in [your console](https://oathbreaker.ai/dashboard).

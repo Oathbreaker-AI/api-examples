@@ -1,0 +1,18 @@
+# Oathbreaker for Codex. Copy to ~/.codex/config.toml, or merge into an existing one:
+# the four top-level keys go above the first [section] in the file.
+# Codex reads the key from OATHBREAKER_API_KEY in the terminal environment.
+# Full guide: https://oathbreaker.ai/agents/codex
+#
+# If oathbreaker-kimi-k3.1-pro is your default model, use
+# model_context_window = 65536 and model_auto_compact_token_limit = 45875.
+
+model = "oathbreaker-glm-5.3"
+model_provider = "oathbreaker"
+model_context_window = 131072
+model_auto_compact_token_limit = 91750
+
+[model_providers.oathbreaker]
+name = "Oathbreaker"
+base_url = "https://oathbreaker.ai/v1"
+env_key = "OATHBREAKER_API_KEY"
+wire_api = "responses"
