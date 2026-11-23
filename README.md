@@ -64,9 +64,18 @@ Oathbreaker needs no SDK of its own. Anything that can call an OpenAI-style Chat
 
 Each guide gives the settings, a runnable example, the request that example sends, and what to watch for with that framework. The examples send only the request fields the [API reference](https://oathbreaker.ai/docs#requests) lists, because the API rejects any other field, and they switch off the automatic retries these libraries apply by default.
 
-## Hermes and other agents
+## Coding agents
 
-Follow [the Hermes walkthrough](HERMES.md) and the maintained [agent setup page](https://oathbreaker.ai/agents), which also covers OpenCode, OpenWork and Pi. No Oathbreaker-specific app or GPU account is required.
+Ready-made configs are in [configs/](configs/). Each folder has the file to copy, a one-line check, the limits to know, and a link to the maintained setup guide.
+
+| Agent | Config | Endpoint | Setup guide |
+|---|---|---|---|
+| Claude Code | [configs/claude-code/](configs/claude-code/) | `/v1/messages` | [oathbreaker.ai/agents/claude-code](https://oathbreaker.ai/agents/claude-code) |
+| Codex | [configs/codex/](configs/codex/) | `/v1/responses` | [oathbreaker.ai/agents/codex](https://oathbreaker.ai/agents/codex) |
+| OpenCode | [configs/opencode/](configs/opencode/) | `/v1/chat/completions` | [oathbreaker.ai/agents/opencode](https://oathbreaker.ai/agents/opencode) |
+| Hermes | [configs/hermes/](configs/hermes/) | `/v1/chat/completions` | [oathbreaker.ai/agents](https://oathbreaker.ai/agents#hermes) |
+
+OpenWork and Pi are covered on the [agent setup page](https://oathbreaker.ai/agents#other-agents), and [HERMES.md](HERMES.md) is a short Hermes walkthrough. No Oathbreaker-specific app or GPU account is required.
 
 ## Streaming and tools
 
@@ -78,7 +87,7 @@ The examples above are non-streaming text requests. See the [API reference](http
 node --test tests/*.test.mjs
 ```
 
-The tests run both languages against a local fixture server and require Python 3. They check request authentication and shape, returned usage, incomplete answers, redirects, and HTTP errors without sending paid inference requests. Passing these tests does not measure live model quality or latency.
+The tests run both languages against a local fixture server and require Python 3. They check request authentication and shape, returned usage, incomplete answers, redirects, and HTTP errors without sending paid inference requests. Passing these tests does not measure live model quality or latency. The same command also checks the agent configs in [configs/](configs/): base URLs, endpoints, models and limits, and that no file holds a key.
 
 Each SDK and framework example has a test of its own, which needs that example's package installed:
 

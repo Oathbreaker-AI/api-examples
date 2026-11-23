@@ -1,0 +1,94 @@
+{
+  "providers": {
+    "oathbreaker": {
+      "name": "Oathbreaker",
+      "package": "@opencode/ai/providers/openai-compatible",
+      "settings": {
+        "baseURL": "https://oathbreaker.ai/v1",
+        "apiKey": "{env:OATHBREAKER_API_KEY}"
+      },
+      "models": {
+        "oathbreaker-glm-5.3": {
+          "name": "oathbreaker-glm-5.3",
+          "capabilities": {
+            "tools": true,
+            "input": [
+              "text"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "limit": {
+            "context": 131072,
+            "output": 32768
+          }
+        },
+        "oathbreaker-glm-5.3-flash": {
+          "name": "oathbreaker-glm-5.3-flash",
+          "capabilities": {
+            "tools": true,
+            "input": [
+              "text"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "limit": {
+            "context": 131072,
+            "output": 32768
+          }
+        },
+        "oathbreaker-deepseek-v4.1-flash": {
+          "name": "oathbreaker-deepseek-v4.1-flash",
+          "capabilities": {
+            "tools": true,
+            "input": [
+              "text"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "limit": {
+            "context": 65536,
+            "output": 32768
+          }
+        },
+        "oathbreaker-deepseek-v4.1-flash-fast": {
+          "name": "oathbreaker-deepseek-v4.1-flash-fast",
+          "capabilities": {
+            "tools": true,
+            "input": [
+              "text"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "limit": {
+            "context": 65536,
+            "output": 32768
+          }
+        },
+        "oathbreaker-kimi-k3.1-pro": {
+          "name": "oathbreaker-kimi-k3.1-pro",
+          "capabilities": {
+            "tools": true,
+            "input": [
+              "text"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "limit": {
+            "context": 65536,
+            "output": 24576
+          }
+        }
+      }
+    }
+  }
+}
