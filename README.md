@@ -5,13 +5,13 @@ Small examples for [Oathbreaker AI](https://oathbreaker.ai), a prepaid model API
 | | |
 |---|---|
 | API format | OpenAI Chat Completions: `POST https://oathbreaker.ai/v1/chat/completions` |
-| Base URL | `https://oathbreaker.ai/v1` |
+| Base URL | `https://oathbreaker.ai/v1`. The host is `oathbreaker.ai`, with no `api.` subdomain. `ai.oathbreaker/oathbreaker` is the MCP Registry name of the [MCP server](https://github.com/Oathbreaker-AI/oathbreaker-mcp), not a hostname. |
 | Authentication | `Authorization: Bearer <key>`, with the key kept in `OATHBREAKER_API_KEY` |
 | Models | `oathbreaker-glm-5.3`, `oathbreaker-glm-5.3-flash`, `oathbreaker-deepseek-v4.1-flash`, `oathbreaker-deepseek-v4.1-flash-fast`, `oathbreaker-kimi-k3.1-pro` |
 | Other formats | `POST /v1/responses` (stateless, for Codex) and `POST /v1/messages` (Anthropic format, for Claude Code). These examples use Chat Completions. |
 | Not offered | Legacy Completions, embeddings, image and audio input |
 
-The JavaScript and Python examples below need no packages. The SDK and framework guides each install the one package they are about.
+The JavaScript and Python examples below need no packages, and the curl request needs only curl. The C++ example uses libcurl and nlohmann/json. The SDK and framework guides each install the one package they are about.
 
 ## Models
 
@@ -49,7 +49,27 @@ Requires Python 3.10 or newer; uses only the standard library.
 python3 python/hello.py
 ```
 
-Both examples print the final answer and returned token usage. They reject redirects and incomplete answers. They deliberately use the official HTTPS base URL and never log the API key. Keep any custom base URL trusted: the function sends its authorization header there.
+## curl
+
+For any language without an OpenAI SDK (C, C++, Go, Rust, shell), send the same request yourself: a `POST` to the full URL with two headers and a JSON body.
+
+```sh
+curl https://oathbreaker.ai/v1/chat/completions \
+  -H "Authorization: Bearer $OATHBREAKER_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"model": "oathbreaker-glm-5.3", "messages": [{"role": "user", "content": "Reply with exactly: Oathbreaker connected."}], "max_tokens": 2048, "reasoning_effort": "low", "stream": false}'
+```
+
+## C++
+
+C++17 with libcurl and nlohmann/json. Build and install steps for Linux, macOS and Windows are in [cpp/](cpp/).
+
+```sh
+g++ -std=c++17 -O2 cpp/hello.cpp -o hello -lcurl
+./hello
+```
+
+These examples print the final answer and returned token usage. The JavaScript, Python and C++ examples reject redirects and incomplete answers. They deliberately use the official HTTPS base URL and never log the API key. Keep any custom base URL trusted: the function sends its authorization header there.
 
 ## SDKs and frameworks
 
@@ -98,6 +118,12 @@ PYTHON=.venv/bin/python node --test tests/frameworks/langchain.test.mjs
 ```
 
 It runs the example against the same kind of local server. It fails if the request carries a field the API reference does not document, or if a failed request is sent more than once. The OpenAI SDK test also needs `npm ci --prefix openai-sdk`.
+
+The C++ test builds the example first, so it needs a compiler, libcurl and nlohmann/json (see [cpp/](cpp/)):
+
+```sh
+node --test tests/cpp/*.test.mjs
+```
 
 ## Support and contributions
 
